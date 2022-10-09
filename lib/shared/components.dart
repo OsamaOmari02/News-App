@@ -11,7 +11,7 @@ Widget articleBuilder(list, context) => Padding(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12.0),
                 image: DecorationImage(
-                    image: NetworkImage(list['urlToImage']),
+                    image: NetworkImage(list['urlToImage']??'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg'),
                     fit: BoxFit.cover)),
           ),
           const SizedBox(width: 20.0),

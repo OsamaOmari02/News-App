@@ -15,7 +15,7 @@ class Sports extends StatelessWidget {
         listener: (BuildContext context, state) {},
         builder: (BuildContext context, Object? state) {
           var list = MyCubit.get(context).sports;
-          return state is SportsLoadingState
+          return state is LoadingState
               ? const Center(
                   child: CircularProgressIndicator(),
                 )

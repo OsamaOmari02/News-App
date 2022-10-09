@@ -15,7 +15,7 @@ class Business extends StatelessWidget {
         listener: (BuildContext context, state) {},
         builder: (BuildContext context, Object? state) {
           var list = MyCubit.get(context).business;
-          return state is BusinessLoadingState
+          return state is LoadingState
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
