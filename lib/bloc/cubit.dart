@@ -7,6 +7,8 @@ import 'package:news_app/view/Science.dart';
 import 'package:news_app/view/business.dart';
 import 'package:news_app/view/sports.dart';
 
+import '../network/remote/dio.dart';
+
 class MyCubit extends Cubit<NewsStates>{
   MyCubit() : super (InitialState());
 
@@ -27,9 +29,63 @@ class MyCubit extends Cubit<NewsStates>{
   ];
 
   changeBottomNavBar(index){
-    currentIndex = index;
-    emit(NewsBottomNavState());
+    if (index!=currentIndex) {
+      currentIndex = index;
+      emit(NewsBottomNavState());
+    }
   }
 
+  List<dynamic> business = [];
+
+  void getBusiness(){
+    if (business.isEmpty) {
+      emit(BusinessLoadingState());
+      DioHelper.getData('v2/top-headlines', {
+        'country': 'us',
+        'category': 'business',
+        'apiKey': '4ac8555381624a3f9ad06899092d8bef'
+      }).then((value) {
+        business = value.data['articles'];
+        emit(BusinessSuccessState());
+      }).onError((e, stackTrace) {
+        print("--------Error is $e");
+        emit(BusinessErrorState(e.toString()));
+      });
+    }
+  }
+
+  List<dynamic> sports = [];
+
+  void getSports() async{
+    emit(SportsLoadingState());
+    DioHelper.getData('v2/top-headlines', {
+      'country' : 'us',
+      'category': 'sports',
+      'apiKey': '4ac8555381624a3f9ad06899092d8bef'
+    }).then((value) {
+      sports = value.data['articles'];
+      emit(SportsSuccessState());
+    }).onError((e, stackTrace) {
+      print("--------Error is $e");
+      emit(SportsErrorState(e.toString()));
+    });
+  }
+
+  List<dynamic> science = [];
+
+  void getScience() async{
+    emit(ScienceLoadingState());
+    DioHelper.getData('v2/top-headlines', {
+      'country' : 'us',
+      'category': 'science',
+      'apiKey': '4ac8555381624a3f9ad06899092d8bef'
+    }).then((value) {
+      science = value.data['articles'];
+      emit(ScienceSuccessState());
+    }).onError((e, stackTrace) {
+      print("--------Error is $e");
+      emit(ScienceErrorState(e.toString()));
+    });
+  }
 
 }

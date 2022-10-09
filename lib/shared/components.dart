@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-Widget listViewBuilder() => Padding(
+Widget articleBuilder(list, context) => Padding(
       padding: const EdgeInsets.all(12.0),
       child: Row(
         children: [
@@ -10,13 +11,12 @@ Widget listViewBuilder() => Padding(
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12.0),
                 image: DecorationImage(
-                    image: NetworkImage(
-                        'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg'),
+                    image: NetworkImage(list['urlToImage']),
                     fit: BoxFit.cover)),
           ),
           const SizedBox(width: 20.0),
           Expanded(
-            child: Container(
+            child: SizedBox(
               height: 120.0,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -24,9 +24,15 @@ Widget listViewBuilder() => Padding(
                 children: [
                   Expanded(
                     child: Text(
-                        'title titletitletitletitletitletitletitle titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle'),
+                      list['title'],
+                      style: Theme.of(context).textTheme.bodyText1,
+                      maxLines: 4,
+                    ),
                   ),
-                  Text('date'),
+                  Text(
+                    list['publishedAt'],
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
                 ],
               ),
             ),
@@ -34,3 +40,10 @@ Widget listViewBuilder() => Padding(
         ],
       ),
     );
+
+Widget listViewBuilder(list) => ListView.separated(
+    itemBuilder: (context, index) => articleBuilder(list[index], context),
+    separatorBuilder: (context, index) => myDivider(),
+    itemCount: list.length);
+
+Widget myDivider() => const Divider(color: Colors.grey,thickness: 0.5);

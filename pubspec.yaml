@@ -36,6 +36,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_bloc: ^8.1.1
   bloc: ^8.1.0
+  dio: ^4.0.6
+  hexcolor:
 
 dev_dependencies:
   flutter_test:

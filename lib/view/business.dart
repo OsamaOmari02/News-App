@@ -14,10 +14,12 @@ class Business extends StatelessWidget {
     return BlocConsumer<MyCubit, NewsStates>(
         listener: (BuildContext context, state) {},
         builder: (BuildContext context, Object? state) {
-          return ListView.separated(
-              itemBuilder: (context, index) => listViewBuilder(),
-              separatorBuilder: (context, index) => const Divider(),
-              itemCount: 3);
+          var list = MyCubit.get(context).business;
+          return state is BusinessLoadingState
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : listViewBuilder(list);
         });
   }
 }
